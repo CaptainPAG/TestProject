@@ -9,7 +9,11 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.n_satou.myapplication.R
 import com.n_satou.myapplication.databinding.FragmentChatBinding
+import com.n_satou.myapplication.model.ChatModel
+import com.n_satou.myapplication.model.UserModel
 import com.n_satou.myapplication.view.adapters.ChatAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by N-Satou on 2018/06/12.
@@ -33,7 +37,26 @@ class ChatFragment: Fragment() {
     private fun initAdapter() {
         binding.recyclerView.also {
             it.setHasFixedSize(true)
-            it.adapter = ChatAdapter()
+            it.adapter = ChatAdapter().also { chatAdapter ->
+
+                // TODO: もちろんテストデータ
+                var list: MutableList<ChatModel> = ArrayList()
+                for (index in 1 .. 100) {
+                    val chat = ChatModel(
+                            text = "いい感じのテスト",
+                            date = Date(),
+                            dateTxt = "2日前",
+                            user = UserModel(
+                                    userId = 1,
+                                    userIcon = "https://images.vexels.com/media/users/3/137142/isolated/preview/639788b1cfe54e46989db666ef36525e-witch-cat-circle-icon-1-by-vexels.png",
+                                    userName = "ユーザー$index"
+                            )
+                    )
+                    list.add(chat)
+                }
+
+                chatAdapter.list = list
+            }
         }
     }
 
